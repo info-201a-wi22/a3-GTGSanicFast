@@ -1,0 +1,49 @@
+---
+title: "index"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+source("../source/analysis.R")
+```
+
+## Introduction
+This report will attempt to expose patterns of inequality by analyzing incarceration data of the US prison system. I have chose to calculate and analyze the ratio between the jailed population of each race and the total population for each race. This will highlight the difference in the proportion of jailed population based on race and could help expose areas with larger differences in these proportions. 
+
+As a summary, I have calculated the ratio between the mean population and jailed population across all counties in the year 2018 to get a view on the most current situation. 
+
+<br/>
+
+Mean jailed population : Mean total population by race <br/>
+
+* Black = `r sum_info$bl_ratio`
+* White = `r sum_info$wt_ratio`
+* Native Americans = `r sum_info$nat_ratio`
+* Asian Americans/Pacific Islander = `r sum_info$aapi_ratio`
+* Latinx = `r sum_info$lat_ratio`
+
+From these results we can already see that the ratio for the black population is considerably higher than the white population.  
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
