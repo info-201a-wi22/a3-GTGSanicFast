@@ -1,5 +1,5 @@
 ---
-title: "Assignment 3"
+title: "Assignment 3: Incarceration"
 author: "Sonic Yao"
 output: html_document
 ---
