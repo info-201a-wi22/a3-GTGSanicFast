@@ -2,7 +2,7 @@ trends <- read.csv("../data/incarceration_trends.csv")
 
 library(dplyr)
 library(ggplot2)
-
+library(scales)
 
 sum_info <- list()
 
@@ -83,4 +83,62 @@ trend_plot <- ggplot(data = tr_pt_df) +
   geom_smooth(mapping = aes(x = year, y = aapi_jail_ratio, color = "Asian American/Pacific Islander")) +
   geom_smooth(mapping = aes(x = year, y = nat_jail_ratio, color = "Native American")) +
   geom_smooth(mapping = aes(x = year, y = lat_jail_ratio, color = "Latinx"))
+
+
+# Variable Comparison
+# white prison adm rate vs black prison adm rate
+
+var_df <- trends %>%
+  select(year, state, white_prison_adm_rate, black_prison_adm_rate) %>%
+  group_by(state) %>%
+  filter(year == 2013) 
+
+var_df[is.na(var_df)] <- 0
+
+var_plot <- ggplot(data = var_df) +
+  ggtitle("White vs Black Prison Admission Rate in 2013") +
+  xlab("White Prison Admission Rate") +
+  ylab("Black Prison Admission Rate") +
+  geom_point(mapping = aes(x = white_prison_adm_rate, 
+                           y = black_prison_adm_rate))
+
+# Map Chart
+blank_theme <- theme_bw() +
+  theme(
+    axis.line = element_blank(),        # remove axis lines
+    axis.text = element_blank(),        # remove axis labels
+    axis.ticks = element_blank(),       # remove axis ticks
+    axis.title = element_blank(),       # remove axis titles
+    plot.background = element_blank(),  # remove gray background
+    panel.grid.major = element_blank(), # remove major grid lines
+    panel.grid.minor = element_blank(), # remove minor grid lines
+    panel.border = element_blank()      # remove border around plot
+  )
+
+map_df <- trends %>%
+  select(year, state, black_pop_15to64, black_jail_pop, total_pop) %>%
+  filter(year == 2018) %>%
+  group_by(state) %>%
+  mutate(bl_jail_ratio = black_jail_pop / total_pop)
+
+map_df$state <- state.name[match(map_df$state, state.abb)]
+
+map_df <- map_df %>%
+  mutate(state = tolower(state))
+
+
+state_shape <- map_data("state") %>%
+  rename(state = region) %>%
+  left_join(map_df, by = "state")
+
+map_chart <- ggplot(state_shape) +
+  geom_polygon(mapping = aes(x = long, y = lat, group = group, fill = bl_jail_ratio),
+               color = "white",
+               size = .1) +
+  coord_map() +
+  scale_fill_continuous(labels = percent, low = "#132B43", high = "Red") +
+  labs(fill = "Jailed Ratio, Black to Total Population") +
+  blank_theme
+
+
 

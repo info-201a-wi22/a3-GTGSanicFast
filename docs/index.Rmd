@@ -36,3 +36,18 @@ plot(trend_plot)
 ```
 
 This chart helps illustrate the trend of the ratio of the jailed population over time. One clear pattern is the consistent positive difference between the trend line for Black people and White people. Although the ratio of jailed Black people are decreasing, it is still far from the ratio of White people, highlighting the unfair treatment of the justice system.
+
+## Variable Comparison
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+plot(var_plot)
+```
+
+This chart compares prison admission rates between black people and white people. The pattern seen from this chart indicates that there is more admissions of black people than white people and is quite a steady trend across all states. 
+
+## Map Chart
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+plot(map_chart)
+```
+
+This chart shows the distribution of the proportion of jail population count of black people to total population count. It helps illustrate which areas are experiencing a higher ratio of jailed black population. Although quite difficult to see the differences, the data suggests that Georgia has the highest jailed ratio for black people of about 7%.
